@@ -8,6 +8,20 @@ class TodoListsController < ApplicationController
 
   # GET /todo_lists/1 or /todo_lists/1.json
   def show
+    @todo_items = case params[:filter]
+                  when "completed"
+                    @todo_list.items.completed
+                  when "pending"
+                    @todo_list.items.pending
+                  else
+                    @todo_list.items
+                  end
+
+    if turbo_frame_request?
+      render partial: "todo_items/list", locals: { todo_items: @todo_items }
+    else
+      render :show
+    end
   end
 
   # GET /todo_lists/new

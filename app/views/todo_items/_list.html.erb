@@ -1,0 +1,9 @@
+<%= turbo_frame_tag "todo_items" do %>
+  <% if todo_items.any? %>
+    <% todo_items.order(created_at: :asc).each do |item| %>
+      <%= render item %>
+    <% end %>
+  <% else %>
+    <p class="text-gray-500 text-center">No items found.</p>
+  <% end %>
+<% end %>

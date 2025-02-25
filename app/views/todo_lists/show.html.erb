@@ -1,16 +1,31 @@
 <div class="max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-md">
   <div class="flex items-center justify-between w-full">
     <%= render "title", todo_list: @todo_list %>
-    
     <%= render "counter", todo_list: @todo_list %>
   </div>
 
+  <div id="todo_items_filter" data-controller="filter" class="flex w-full my-4">
+    <div class="inline-flex w-full rounded-lg border border-gray-300">
+      <%= link_to "All", 
+        todo_list_path(@todo_list), 
+        data: { turbo_frame: "todo_items", action: "filter#update", filter_target: "button" }, 
+        class: "w-1/3 px-4 py-2 text-center border-r border-gray-300" %> 
 
-  <div id="todo_items" class="p-4">
-    <% @todo_list.items.order(created_at: :asc).each do |item| %>
-      <%= render item %>
-    <% end %>
+      <%= link_to "Completed", 
+        todo_list_path(@todo_list, filter: "completed"), 
+        data: { turbo_frame: "todo_items", action: "filter#update", filter_target: "button" }, 
+        class: "w-1/3 px-4 py-2 text-center border-r border-gray-300" %> 
+
+      <%= link_to "Pending", 
+        todo_list_path(@todo_list, filter: "pending"), 
+        data: { turbo_frame: "todo_items", action: "filter#update", filter_target: "button" }, 
+        class: "w-1/3 px-4 py-2 text-center" %> 
+    </div>
   </div>
+
+  <%= turbo_frame_tag "todo_items" do %>
+    <%= render "todo_items/list", todo_items: @todo_items %>
+  <% end %>
 
   <%= turbo_frame_tag :new_todo_item, src: new_todo_list_todo_item_path(@todo_list) %>
 
