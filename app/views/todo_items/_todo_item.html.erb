@@ -1,0 +1,19 @@
+<%= turbo_frame_tag dom_id(todo_item) do %>
+  <div class="flex items-center justify-between p-4 <%= todo_item.completed ? "bg-green-100" : "bg-gray-100" %> shadow-md rounded-lg mb-4">
+    <div class="flex-1">
+      <h2 class="text-lg font-semibold text-gray-900">
+        <%= todo_item.name %>
+      </h2>
+
+      <% if todo_item.due_date %>
+        <p class="text-sm text-gray-600">
+          Due Date: <%= todo_item.due_date.strftime("%B %d, %Y") %>
+        </p>
+      <% end %>
+    </div>
+
+    <div class="flex items-center space-x-4">
+      <%= check_box_tag "completed", true, todo_item.completed, class: "w-5 h-5 rounded-full text-green-300", id: dom_id(todo_item, "checkbox"), data: { controller: "checkbox", action: "change->checkbox#toggle", checkbox_url_value: todo_list_todo_item_path(todo_item.todo_list, todo_item) } %>
+    </div>
+  </div>
+<% end %>

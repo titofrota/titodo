@@ -1,0 +1,9 @@
+<div class="p-4 bg-gray-100 rounded-lg shadow-sm">
+  <h2 class="font-semibold text-lg text-gray-800"><%= todo_list.name %></h2>
+
+  <div class="mt-2 space-x-4">
+    <%= link_to "Show", todo_list, class: "text-blue-500 hover:underline" %>
+    <%= link_to "Edit", edit_todo_list_path(todo_list), class: "text-yellow-500 hover:underline" %>
+    <%= button_to "Destroy", todo_list, method: :delete, data: { turbo_action: "replace", confirm: "Are you sure?" }, class: "text-red-500 hover:underline" %>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+<%= form_with(model: [todo_item.todo_list, todo_item]) do |form| %>
+  <% if todo_item.errors.any? %>
+    <div class="bg-red-100 text-red-700 p-4 rounded-md mb-4">
+      <h2 class="font-semibold"><%= pluralize(todo_item.errors.count, "error") %> prohibited this todo item from being saved:</h2>
+      <ul class="list-inside list-disc">
+        <% todo_item.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="flex items-center space-x-4">
+    <div class="flex-1">
+      <%= form.label :name, "Description", class: "block text-sm font-medium text-gray-700" %>
+      <%= form.text_field :name, class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+    </div>
+
+    <div class="flex-1">
+      <%= form.label :due_date, "Due Date", class: "block text-sm font-medium text-gray-700" %>
+      <%= form.date_field :due_date, class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+    </div>
+
+    <div class="flex items-center justify-center">
+      <%= form.submit "+ Add", class: "inline-block px-6 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600" %>
+    </div>
+  </div>
+<% end %>

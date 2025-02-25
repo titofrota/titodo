@@ -3,3 +3,6 @@
 // ./bin/rails generate stimulus controllerName
 
 import { application } from "./application"
+
+import CheckboxController from "./checkbox_controller"
+application.register("checkbox", CheckboxController)

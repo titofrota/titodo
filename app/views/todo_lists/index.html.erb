@@ -1,0 +1,17 @@
+<%= content_for :title, "Todo Lists" %>
+
+<div class="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">
+  <h1 class="text-2xl font-bold text-gray-800 mb-4">Todo Lists</h1>
+
+  <div id="todo_lists" class="space-y-4">
+    <% @todo_lists.each do |todo_list| %>
+      <%= render todo_list %>
+    <% end %>
+  </div>
+
+  <div class="mt-6">
+    <%= link_to "New Todo List", new_todo_list_path, class: "inline-block px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600" %>
+  </div>
+</div>
+
+<%= turbo_stream_from "todo_lists" %>

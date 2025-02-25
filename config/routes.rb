@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  root to: "pages#home"
+  resources :todo_lists do
+    resources :todo_items
+  end
+  root to: "todo_lists#index"
 
   get "/up/", to: "up#index", as: :up
   get "/up/databases", to: "up#databases", as: :up_databases
