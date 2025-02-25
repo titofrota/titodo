@@ -1,27 +1,31 @@
+<div class="max-w-3xl mx-auto justify-between my-4">
+  <%= link_to "< View all todo lists", todo_lists_path, class: "text-gray-700 hover:underline" %>
+</div>
+
 <div class="max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-md">
   <div class="flex items-center justify-between w-full">
     <%= render "title", todo_list: @todo_list %>
     <%= render "counter", todo_list: @todo_list %>
   </div>
 
-<div id="todo_items_filter" data-controller="filter" class="flex w-full my-4">
-  <div class="inline-flex w-full rounded-lg border border-gray-300 flex-col sm:flex-row">
-    <%= link_to "All", 
-      todo_list_path(@todo_list), 
-      data: { turbo_frame: "todo_items", action: "filter#update", filter_target: "button" }, 
-      class: "w-full sm:w-1/3 px-4 py-2 text-center border-b sm:border-b-0 sm:border-r border-gray-300" %> 
+  <div id="todo_items_filter" data-controller="filter" class="flex w-full my-4">
+    <div class="inline-flex w-full rounded-lg border border-gray-300 flex-col sm:flex-row">
+      <%= link_to "All", 
+        todo_list_path(@todo_list), 
+        data: { turbo_frame: "todo_items", action: "filter#update", filter_target: "button" }, 
+        class: "w-full sm:w-1/3 px-4 py-2 text-center border-b sm:border-b-0 sm:border-r border-gray-300" %> 
 
-    <%= link_to "Completed", 
-      todo_list_path(@todo_list, filter: "completed"), 
-      data: { turbo_frame: "todo_items", action: "filter#update", filter_target: "button" }, 
-      class: "w-full sm:w-1/3 px-4 py-2 text-center border-b sm:border-b-0 sm:border-r border-gray-300" %> 
+      <%= link_to "Completed", 
+        todo_list_path(@todo_list, filter: "completed"), 
+        data: { turbo_frame: "todo_items", action: "filter#update", filter_target: "button" }, 
+        class: "w-full sm:w-1/3 px-4 py-2 text-center border-b sm:border-b-0 sm:border-r border-gray-300" %> 
 
-    <%= link_to "Pending", 
-      todo_list_path(@todo_list, filter: "pending"), 
-      data: { turbo_frame: "todo_items", action: "filter#update", filter_target: "button" }, 
-      class: "w-full sm:w-1/3 px-4 py-2 text-center border-b sm:border-b-0" %> 
+      <%= link_to "Pending", 
+        todo_list_path(@todo_list, filter: "pending"), 
+        data: { turbo_frame: "todo_items", action: "filter#update", filter_target: "button" }, 
+        class: "w-full sm:w-1/3 px-4 py-2 text-center border-b sm:border-b-0" %> 
+    </div>
   </div>
-</div>
 
 
   <%= turbo_frame_tag "todo_items" do %>
@@ -29,12 +33,4 @@
   <% end %>
 
   <%= turbo_frame_tag :new_todo_item, src: new_todo_list_todo_item_path(@todo_list) %>
-
-  <div class="mt-6 flex space-x-4">
-    <%= link_to "Back to todo lists", todo_lists_path, class: "text-gray-700 hover:underline" %>
-  </div>
-
-  <div class="mt-6">
-    <%= button_to "Destroy this todo list", @todo_list, method: :delete, data: { confirm: "Are you sure?" }, class: "px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600" %>
-  </div>
 </div>
