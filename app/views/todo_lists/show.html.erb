@@ -1,11 +1,10 @@
-<p class="text-green-600"><%= notice %></p>
-
 <div class="max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-md">
-
-  <div class="flex items-center justify-between">
-    <h1 class="text-2xl my-4"><%= @todo_list.name %></h1>
+  <div class="flex items-center justify-between w-full">
+    <%= render "title", todo_list: @todo_list %>
+    
     <%= render "counter", todo_list: @todo_list %>
   </div>
+
 
   <div id="todo_items" class="p-4">
     <% @todo_list.items.order(created_at: :asc).each do |item| %>
@@ -13,12 +12,9 @@
     <% end %>
   </div>
 
-
   <%= turbo_frame_tag :new_todo_item, src: new_todo_list_todo_item_path(@todo_list) %>
 
   <div class="mt-6 flex space-x-4">
-    <%= link_to "Edit this todo list", edit_todo_list_path(@todo_list), class: "text-blue-500 hover:underline" %>
-    <span>|</span>
     <%= link_to "Back to todo lists", todo_lists_path, class: "text-gray-700 hover:underline" %>
   </div>
 

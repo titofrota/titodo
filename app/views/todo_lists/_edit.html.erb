@@ -1,0 +1,9 @@
+<%= turbo_frame_tag dom_id(todo_list, :name) do %>
+  <div class="flex items-center space-x-2">
+    <%= form_with model: todo_list, url: todo_list_path(todo_list), method: :patch, data: { turbo_frame: dom_id(todo_list, :name) }, class: "flex-1 flex items-center space-x-2" do |f| %>
+      <%= f.text_field :name, autofocus: true, class: "border p-2 rounded w-full text-2xl font-bold" %>
+      
+      <%= f.submit "💾", class: "text-blue-500 hover:text-blue-700 cursor-pointer" %>
+    <% end %>
+  </div>
+<% end %>

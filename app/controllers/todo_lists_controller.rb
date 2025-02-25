@@ -17,6 +17,7 @@ class TodoListsController < ApplicationController
 
   # GET /todo_lists/1/edit
   def edit
+    render partial: "edit", locals: { todo_list: @todo_list }
   end
 
   # POST /todo_lists or /todo_lists.json
@@ -38,7 +39,7 @@ class TodoListsController < ApplicationController
   def update
     respond_to do |format|
       if @todo_list.update(todo_list_params)
-        format.html { redirect_to @todo_list, notice: "Todo list was successfully updated." }
+        format.turbo_stream { }
         format.json { render :show, status: :ok, location: @todo_list }
       else
         format.html { render :edit, status: :unprocessable_entity }
