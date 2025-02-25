@@ -18,6 +18,7 @@ class TodoItemsController < ApplicationController
 
   # GET /todo_items/1/edit
   def edit
+    render partial: "edit", locals: { todo_item: @todo_item }
   end
 
   # POST /todo_items or /todo_items.json
