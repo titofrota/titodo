@@ -4,16 +4,12 @@
       <h2 class="text-lg font-semibold text-gray-900">
         <%= todo_item.name %>
       </h2>
-
-      <% if todo_item.due_date %>
-        <p class="text-sm text-gray-600">
-          Due Date: <%= todo_item.due_date.strftime("%B %d, %Y") %>
-        </p>
-      <% end %>
     </div>
 
     <div class="flex items-center space-x-4">
-      <%= check_box_tag "completed", true, todo_item.completed, class: "w-5 h-5 rounded-full text-green-300", id: dom_id(todo_item, "checkbox"), data: { controller: "checkbox", action: "change->checkbox#toggle", checkbox_url_value: todo_list_todo_item_path(todo_item.todo_list, todo_item) } %>
+      <%= check_box_tag "completed", true, todo_item.completed, class: "w-5 h-5 rounded-full text-green-300 cursor-pointer", id: dom_id(todo_item, "checkbox"), data: { controller: "checkbox", action: "change->checkbox#toggle", checkbox_url_value: todo_list_todo_item_path(todo_item.todo_list, todo_item) } %>
+
+      <%= button_to "✖", todo_list_todo_item_path(todo_item.todo_list, todo_item), method: :delete, class: "text-red-500 hover:text-red-700 cursor-pointer", data: { turbo_confirm: "Are you sure?" } %>
     </div>
   </div>
 <% end %>

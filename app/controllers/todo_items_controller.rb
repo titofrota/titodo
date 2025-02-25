@@ -53,7 +53,8 @@ class TodoItemsController < ApplicationController
     @todo_item.destroy!
 
     respond_to do |format|
-      format.html { redirect_to todo_items_path, status: :see_other, notice: "Todo item was successfully destroyed." }
+      format.turbo_stream { }
+      # format.html { redirect_to todo_items_path, status: :see_other, notice: "Todo item was successfully destroyed." }
       format.json { head :no_content }
     end
   end
