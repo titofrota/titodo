@@ -42,28 +42,35 @@ class TodoItemsController < ApplicationController
 
   # PATCH/PUT /todo_items/1 or /todo_items/1.json
   def update
-    respond_to do |format|
-      if @todo_item.update(todo_item_params)
+    result = TodoItems::UpdateTodoItemService.new(@todo_item, todo_item_params).call
+  
+    case result
+    when Success
+      respond_to do |format|
         format.turbo_stream { }
         format.json { render :show, status: :ok, location: @todo_item }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @todo_item.errors, status: :unprocessable_entity }
       end
+    when Failure
+      render :edit, status: :unprocessable_entity, locals: { errors: result.failure }
     end
-  end
+  end  
 
 
   # DELETE /todo_items/1 or /todo_items/1.json
   def destroy
-    @todo_item.destroy!
-
-    respond_to do |format|
-      format.turbo_stream { }
-      # format.html { redirect_to todo_items_path, status: :see_other, notice: "Todo item was successfully destroyed." }
-      format.json { head :no_content }
+    result = TodoItems::DestroyTodoItemService.new(@todo_item).call
+  
+    case result
+    when Success
+      respond_to do |format|
+        format.turbo_stream { }
+        format.json { head :no_content }
+      end
+    when Failure
+      render :index, status: :unprocessable_entity, locals: { errors: result.failure }
     end
   end
+  
 
   private
     # Use callbacks to share common setup or constraints between actions.
