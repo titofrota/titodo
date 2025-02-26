@@ -9,13 +9,13 @@ class TodoListsController < ApplicationController
   # GET /todo_lists/1 or /todo_lists/1.json
   def show
     @todo_items = case params[:filter]
-                  when "completed"
+    when "completed"
                     @todo_list.items.completed
-                  when "pending"
+    when "pending"
                     @todo_list.items.pending
-                  else
+    else
                     @todo_list.items
-                  end
+    end
 
     if turbo_frame_request?
       render @todo_items
@@ -42,7 +42,7 @@ class TodoListsController < ApplicationController
   # POST /todo_lists or /todo_lists.json
   def create
     @todo_list = TodoList.new(todo_list_params)
-  
+
     if @todo_list.save
       respond_to do |format|
         format.html { redirect_to todo_lists_path, notice: "Todo list was successfully created." }
@@ -52,7 +52,7 @@ class TodoListsController < ApplicationController
       render :new, status: :unprocessable_entity
     end
   end
-  
+
 
   # PATCH/PUT /todo_lists/1 or /todo_lists/1.json
   def update
