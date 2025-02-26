@@ -1,5 +1,5 @@
 module TodoLists
-  class CreateTodoList
+  class CreateTodoListService
     include Dry::Monads[:result]
 
     def initialize(params)
