@@ -1,4 +1,6 @@
 class TodoListsController < ApplicationController
+  include Dry::Monads[:result]
+  
   before_action :set_todo_list, only: %i[ show edit update destroy ]
 
   # GET /todo_lists or /todo_lists.json
@@ -41,17 +43,18 @@ class TodoListsController < ApplicationController
 
   # POST /todo_lists or /todo_lists.json
   def create
-    @todo_list = TodoList.new(todo_list_params)
-
-    if @todo_list.save
+    result = TodoLists::CreateService.new(todo_list_params).call
+  
+    case result
+    when Success
       respond_to do |format|
         format.html { redirect_to todo_lists_path, notice: "Todo list was successfully created." }
         format.turbo_stream
       end
-    else
-      render :new, status: :unprocessable_entity
+    when Failure
+      render :new, status: :unprocessable_entity, locals: { errors: result.failure }
     end
-  end
+  end  
 
 
   # PATCH/PUT /todo_lists/1 or /todo_lists/1.json
