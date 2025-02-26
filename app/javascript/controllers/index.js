@@ -3,3 +3,12 @@
 // ./bin/rails generate stimulus controllerName
 
 import { application } from "./application"
+
+import AutofocusController from "./autofocus_controller"
+application.register("autofocus", AutofocusController)
+
+import CheckboxController from "./checkbox_controller"
+application.register("checkbox", CheckboxController)
+
+import FilterController from "./filter_controller"
+application.register("filter", FilterController)

@@ -1,0 +1,16 @@
+<% if @todo_lists.empty? %>
+  <div id="todo_lists_empty" class="text-center py-8">
+    <h2 class="text-3xl font-semibold text-gray-700 mb-4">You have no todo lists yet 🫤</h2>
+    <p class="text-lg text-gray-500 mb-6">Start by creating your first Todo List and organize what needs to be done!</p>
+  </div>
+<% else %>
+    <%= render partial: "todo_lists/todo_lists", locals: { todo_lists: @todo_lists } %>
+<% end %>
+
+<%= turbo_frame_tag "new_todo_list_form" do %>
+  <div class="max-w-4xl my-4 mx-auto p-6 bg-white rounded-lg shadow-md">
+    <%= render "form", todo_list: TodoList.new %> 
+  </div>
+<% end %>
+
+<%= turbo_stream_from "todo_lists" %>
