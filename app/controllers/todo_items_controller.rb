@@ -1,4 +1,6 @@
 class TodoItemsController < ApplicationController
+  include Dry::Monads[:result]
+
   before_action :set_todo_list
   before_action :set_todo_item, only: %i[ show edit update destroy ]
 
@@ -23,15 +25,18 @@ class TodoItemsController < ApplicationController
 
   # POST /todo_items or /todo_items.json
   def create
-    @todo_item = @todo_list.items.new(todo_item_params)
+    result = TodoItems::CreateService.new(@todo_list, todo_item_params).call
+    
+    case result
+    when Success
+      @todo_item = result.success # Store the created item
 
-    respond_to do |format|
-      if @todo_item.save
-        format.turbo_stream { }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @todo_item.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        format.turbo_stream
+        # format.html { redirect_to @todo_list, notice: 'Todo item was successfully created.' }
       end
+    when Failure
+      render :new, status: :unprocessable_entity, locals: { errors: result.failure }
     end
   end
 
