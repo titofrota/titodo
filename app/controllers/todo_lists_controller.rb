@@ -18,7 +18,7 @@ class TodoListsController < ApplicationController
                   end
 
     if turbo_frame_request?
-      render partial: "todo_items/list", locals: { todo_items: @todo_items }
+      render @todo_items
     else
       render :show
     end
@@ -27,6 +27,11 @@ class TodoListsController < ApplicationController
   # GET /todo_lists/new
   def new
     @todo_list = TodoList.new
+
+    respond_to do |format|
+      format.html
+      format.turbo_stream
+    end
   end
 
   # GET /todo_lists/1/edit
@@ -37,17 +42,17 @@ class TodoListsController < ApplicationController
   # POST /todo_lists or /todo_lists.json
   def create
     @todo_list = TodoList.new(todo_list_params)
-
-    respond_to do |format|
-      if @todo_list.save
-        format.html { redirect_to @todo_list, notice: "Todo list was successfully created." }
-        format.json { render :show, status: :created, location: @todo_list }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @todo_list.errors, status: :unprocessable_entity }
+  
+    if @todo_list.save
+      respond_to do |format|
+        format.html { redirect_to todo_lists_path, notice: "Todo list was successfully created." }
+        format.turbo_stream
       end
+    else
+      render :new, status: :unprocessable_entity
     end
   end
+  
 
   # PATCH/PUT /todo_lists/1 or /todo_lists/1.json
   def update

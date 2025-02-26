@@ -1,0 +1,5 @@
+<% if TodoList.count == 1 %>
+  <%= turbo_stream.replace "todo_lists_empty", partial: "todo_lists/todo_lists", locals: { todo_lists: TodoList.all } %>
+<% else %>
+  <%= turbo_stream.append "todo_lists", partial: "todo_lists/todo_list", locals: { todo_list: @todo_list } %>
+<% end %>
