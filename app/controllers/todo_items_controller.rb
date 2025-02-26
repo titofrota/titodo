@@ -25,7 +25,7 @@ class TodoItemsController < ApplicationController
 
   # POST /todo_items or /todo_items.json
   def create
-    result = TodoItems::CreateService.new(@todo_list, todo_item_params).call
+    result = TodoItems::CreateTodoItemService.new(@todo_list, todo_item_params).call
     
     case result
     when Success

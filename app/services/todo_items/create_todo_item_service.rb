@@ -1,5 +1,5 @@
 module TodoItems
-  class CreateService
+  class CreateTodoItemService
     include Dry::Monads[:result]
 
     def initialize(todo_list, params)
