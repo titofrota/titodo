@@ -6,4 +6,6 @@ set -e
 # into your volume persisted public directory.
 cp -r /public /app
 
+rails db:create db:migrate
+
 exec "$@"
