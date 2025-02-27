@@ -25,20 +25,26 @@ class TodoItemsController < ApplicationController
 
   # POST /todo_items or /todo_items.json
   def create
+    @todo_item = @todo_list.items.new(todo_item_params)
+  
     result = TodoItems::CreateTodoItemService.new(@todo_list, todo_item_params).call
-
+  
+    puts result
     case result
     when Success
       @todo_item = result.success # Store the created item
-
+  
       respond_to do |format|
         format.turbo_stream
         # format.html { redirect_to @todo_list, notice: 'Todo item was successfully created.' }
       end
     when Failure
-      render :new, status: :unprocessable_entity, locals: { errors: result.failure }
+      respond_to do |format|
+        format.turbo_stream { render turbo_stream: turbo_stream.update("new_todo_item", partial: "todo_items/form", locals: { todo_item: @todo_item, errors: result.failure }) }
+        # format.html { render :new, status: :unprocessable_entity }
+      end
     end
-  end
+  end  
 
   # PATCH/PUT /todo_items/1 or /todo_items/1.json
   def update
