@@ -49,11 +49,11 @@ class TodoListsController < ApplicationController
 
     case result
     when Success
-      @todo_list = result.success 
+      @todo_list = result.success
 
       respond_to do |format|
-        # 
-        format.turbo_stream 
+        #
+        format.turbo_stream
         # format.html { redirect_to todo_lists_path, notice: "Todo list was successfully created." }
       end
     when Failure

@@ -32,16 +32,16 @@ class TodoListsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create todo_list" do
-    assert_difference('TodoList.count') do
-      post todo_lists_url, params: { todo_list: { name: 'New Todo List' } }, as: :turbo_stream
+    assert_difference("TodoList.count") do
+      post todo_lists_url, params: { todo_list: { name: "New Todo List" } }, as: :turbo_stream
     end
     assert_response :success
     assert_match /turbo-stream action="append"/, @response.body
   end
 
   test "should fail to create todo_list" do
-    assert_no_difference('TodoList.count') do
-      post todo_lists_url, params: { todo_list: { name: '' } }, as: :turbo_stream
+    assert_no_difference("TodoList.count") do
+      post todo_lists_url, params: { todo_list: { name: "" } }, as: :turbo_stream
     end
     assert_response :unprocessable_entity
   end
@@ -52,24 +52,24 @@ class TodoListsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update todo_list" do
-    patch todo_list_url(@todo_list), params: { todo_list: { name: 'Updated Todo List' } }, as: :turbo_stream
+    patch todo_list_url(@todo_list), params: { todo_list: { name: "Updated Todo List" } }, as: :turbo_stream
     assert_response :success
   end
 
   test "should destroy todo_list" do
-    assert_difference('TodoList.count', -1) do
+    assert_difference("TodoList.count", -1) do
       delete todo_list_url(@todo_list)
     end
     assert_redirected_to todo_lists_path
   end
 
   test "should handle turbo stream for create" do
-    post todo_lists_url, params: { todo_list: { name: 'New Todo List' } }, as: :turbo_stream
+    post todo_lists_url, params: { todo_list: { name: "New Todo List" } }, as: :turbo_stream
     assert_response :success
   end
 
   test "should handle turbo stream for update" do
-    patch todo_list_url(@todo_list), params: { todo_list: { name: 'Updated Todo List' } }, as: :turbo_stream
+    patch todo_list_url(@todo_list), params: { todo_list: { name: "Updated Todo List" } }, as: :turbo_stream
     assert_response :success
   end
 

@@ -23,7 +23,7 @@ class TodoListTest < ActiveSupport::TestCase
     todo_list = TodoList.create(name: "Test List")
     todo_item = TodoItem.create(name: "Item 1", todo_list: todo_list)
 
-    assert_difference 'TodoItem.count', -1 do
+    assert_difference "TodoItem.count", -1 do
       todo_list.destroy
     end
   end

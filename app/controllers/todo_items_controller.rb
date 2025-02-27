@@ -32,7 +32,7 @@ class TodoItemsController < ApplicationController
     case result
     when Success
       @todo_item = result.success
-      
+
       respond_to do |format|
         format.turbo_stream
         # format.html { redirect_to @todo_list, notice: "Todo item was successfully created." }
