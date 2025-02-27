@@ -99,6 +99,14 @@ GEM
       irb (~> 1.10)
       reline (>= 0.3.8)
     drb (2.2.1)
+    dry-core (1.1.0)
+      concurrent-ruby (~> 1.0)
+      logger
+      zeitwerk (~> 2.6)
+    dry-monads (1.7.1)
+      concurrent-ruby (~> 1.0)
+      dry-core (~> 1.1)
+      zeitwerk (~> 2.6)
     erubi (1.13.1)
     ffi (1.17.1-aarch64-linux-gnu)
     ffi (1.17.1-aarch64-linux-musl)
@@ -330,6 +338,7 @@ DEPENDENCIES
   capybara
   cssbundling-rails
   debug
+  dry-monads
   hotwire-spark (~> 0.1)
   jbuilder
   jsbundling-rails
