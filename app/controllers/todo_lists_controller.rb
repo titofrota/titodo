@@ -3,12 +3,10 @@ class TodoListsController < ApplicationController
 
   before_action :set_todo_list, only: %i[show edit update destroy]
 
-  # GET /todo_lists or /todo_lists.json
   def index
     @todo_lists = TodoList.all
   end
 
-  # GET /todo_lists/1 or /todo_lists/1.json
   def show
     @todo_items = case params[:filter]
     when "completed"
@@ -26,7 +24,6 @@ class TodoListsController < ApplicationController
     end
   end
 
-  # GET /todo_lists/new
   def new
     @todo_list = TodoList.new
 
@@ -36,12 +33,10 @@ class TodoListsController < ApplicationController
     end
   end
 
-  # GET /todo_lists/1/edit
   def edit
     render partial: "edit", locals: { todo_list: @todo_list }
   end
 
-  # POST /todo_lists or /todo_lists.json
   def create
     @todo_list = TodoList.new(todo_list_params)
 
@@ -52,19 +47,15 @@ class TodoListsController < ApplicationController
       @todo_list = result.success
 
       respond_to do |format|
-        #
         format.turbo_stream
-        # format.html { redirect_to todo_lists_path, notice: "Todo list was successfully created." }
       end
     when Failure
       respond_to do |format|
         format.turbo_stream { render turbo_stream: turbo_stream.update("new_todo_list", partial: "todo_lists/form", locals: { todo_list: @todo_list, errors: result.failure }), status: :unprocessable_entity }
-        # format.html { render :new, status: :unprocessable_entity, locals: { errors: result.failure } }
       end
     end
   end
 
-  # PATCH/PUT /todo_lists/1 or /todo_lists/1.json
   def update
     result = TodoLists::UpdateTodoListService.new(@todo_list, todo_list_params).call
 
@@ -78,7 +69,6 @@ class TodoListsController < ApplicationController
     end
   end
 
-  # DELETE /todo_lists/1 or /todo_lists/1.json
   def destroy
     result = TodoLists::DestroyTodoListService.new(@todo_list).call
 
