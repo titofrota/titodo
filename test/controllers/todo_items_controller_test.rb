@@ -30,13 +30,13 @@ class TodoItemsControllerTest < ActionDispatch::IntegrationTest
     assert_match /turbo-stream action="append"/, @response.body
   end
 
-  # test "should not create todo_item with invalid data" do
-  #   assert_no_difference("TodoItem.count") do
-  #     post todo_list_todo_items_url(@todo_list), params: { todo_item: { name: "", completed: false, due_date: Date.tomorrow } }, as: :turbo_stream
-  #   end
-  #   assert_response :unprocessable_entity
-  #   assert_match /turbo-stream action="update"/, @response.body
-  # end
+  test "should not create todo_item with invalid data" do
+    assert_no_difference("TodoItem.count") do
+      post todo_list_todo_items_url(@todo_list), params: { todo_item: { name: "", completed: false, due_date: Date.tomorrow } }, as: :turbo_stream
+    end
+    assert_response :unprocessable_entity
+    assert_match /turbo-stream action="update"/, @response.body
+  end
 
 
   test "should update todo_item" do

@@ -33,17 +33,18 @@ class TodoListsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create todo_list" do
     assert_difference('TodoList.count') do
-      post todo_lists_url, params: { todo_list: { name: 'New Todo List' } }
+      post todo_lists_url, params: { todo_list: { name: 'New Todo List' } }, as: :turbo_stream
     end
-    assert_redirected_to todo_lists_path
+    assert_response :success
+    assert_match /turbo-stream action="append"/, @response.body
   end
 
-  # test "should fail to create todo_list" do
-  #   assert_no_difference('TodoList.count') do
-  #     post todo_lists_url, params: { todo_list: { name: '' } }
-  #   end
-  #   assert_response :unprocessable_entity
-  # end
+  test "should fail to create todo_list" do
+    assert_no_difference('TodoList.count') do
+      post todo_lists_url, params: { todo_list: { name: '' } }, as: :turbo_stream
+    end
+    assert_response :unprocessable_entity
+  end
 
   test "should get edit" do
     get edit_todo_list_url(@todo_list)

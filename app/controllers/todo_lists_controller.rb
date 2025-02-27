@@ -52,6 +52,7 @@ class TodoListsController < ApplicationController
       @todo_list = result.success 
 
       respond_to do |format|
+        # 
         format.turbo_stream 
         # format.html { redirect_to todo_lists_path, notice: "Todo list was successfully created." }
       end
