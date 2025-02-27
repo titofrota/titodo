@@ -17,6 +17,10 @@ TiTodo is a simple yet effective to-do list application built with Ruby on Rails
 
 ## Features
 
+- View a list of to-do lists
+- Create new to-do lists
+- Edit existing to-do lists
+- Delete to-do lists
 - View a list of to-do items
 - Filter tasks by status: pending, completed, or all
 - Create new to-do items
