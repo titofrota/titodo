@@ -1,7 +1,7 @@
 class TodoListsController < ApplicationController
   include Dry::Monads[:result]
 
-  before_action :set_todo_list, only: %i[ show edit update destroy ]
+  before_action :set_todo_list, only: %i[show edit update destroy]
 
   # GET /todo_lists or /todo_lists.json
   def index
@@ -51,13 +51,12 @@ class TodoListsController < ApplicationController
 
       respond_to do |format|
         format.html { redirect_to todo_lists_path, notice: "Todo list was successfully created." }
-        format.turbo_stream
+        format.turbo_stream 
       end
     when Failure
       render :new, status: :unprocessable_entity, locals: { errors: result.failure }
     end
   end
-
 
   # PATCH/PUT /todo_lists/1 or /todo_lists/1.json
   def update
@@ -66,7 +65,6 @@ class TodoListsController < ApplicationController
     case result
     when Success
       respond_to do |format|
-        format.html { redirect_to todo_lists_path, notice: "Todo list was successfully updated." }
         format.turbo_stream
       end
     when Failure
@@ -85,18 +83,20 @@ class TodoListsController < ApplicationController
         format.json { head :no_content }
       end
     when Failure
-      render :index, status: :unprocessable_entity, locals: { errors: result.failure }
+      respond_to do |format|
+        format.turbo_stream { render turbo_stream: turbo_stream.replace("todo_list_#{@todo_list.id}", partial: "todo_lists/todo_list", locals: { todo_list: @todo_list, errors: result.failure }), status: :unprocessable_entity }
+        format.html { render :index, status: :unprocessable_entity, locals: { errors: result.failure } }
+      end
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+
     def set_todo_list
-      @todo_list = TodoList.find(params.expect(:id))
+      @todo_list = TodoList.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
     def todo_list_params
-      params.expect(todo_list: [ :name ])
+      params.require(:todo_list).permit(:name)
     end
 end
