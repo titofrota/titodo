@@ -43,18 +43,23 @@ class TodoListsController < ApplicationController
 
   # POST /todo_lists or /todo_lists.json
   def create
+    @todo_list = TodoList.new(todo_list_params)
+
     result = TodoLists::CreateTodoListService.new(todo_list_params).call
 
     case result
     when Success
-      @todo_list = result.success # Store the created list
+      @todo_list = result.success 
 
       respond_to do |format|
-        format.html { redirect_to todo_lists_path, notice: "Todo list was successfully created." }
         format.turbo_stream 
+        # format.html { redirect_to todo_lists_path, notice: "Todo list was successfully created." }
       end
     when Failure
-      render :new, status: :unprocessable_entity, locals: { errors: result.failure }
+      respond_to do |format|
+        format.turbo_stream { render turbo_stream: turbo_stream.update("new_todo_list", partial: "todo_lists/form", locals: { todo_list: @todo_list, errors: result.failure }), status: :unprocessable_entity }
+        # format.html { render :new, status: :unprocessable_entity, locals: { errors: result.failure } }
+      end
     end
   end
 

@@ -7,10 +7,10 @@
     <%= render partial: "todo_lists/todo_lists", locals: { todo_lists: @todo_lists } %>
 <% end %>
 
-<%= turbo_frame_tag "new_todo_list_form" do %>
   <div class="max-w-4xl my-4 mx-auto p-6 bg-white rounded-lg shadow-md">
-    <%= render "form", todo_list: TodoList.new %> 
+    <%= turbo_frame_tag "new_todo_list" do %>
+      <%= render "form", todo_list: TodoList.new %> 
+    <% end %>
   </div>
-<% end %>
 
 <%= turbo_stream_from "todo_lists" %>
