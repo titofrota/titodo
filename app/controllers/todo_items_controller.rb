@@ -26,7 +26,7 @@ class TodoItemsController < ApplicationController
   # POST /todo_items or /todo_items.json
   def create
     result = TodoItems::CreateTodoItemService.new(@todo_list, todo_item_params).call
-    
+
     case result
     when Success
       @todo_item = result.success # Store the created item
@@ -43,7 +43,7 @@ class TodoItemsController < ApplicationController
   # PATCH/PUT /todo_items/1 or /todo_items/1.json
   def update
     result = TodoItems::UpdateTodoItemService.new(@todo_item, todo_item_params).call
-  
+
     case result
     when Success
       respond_to do |format|
@@ -53,13 +53,13 @@ class TodoItemsController < ApplicationController
     when Failure
       render :edit, status: :unprocessable_entity, locals: { errors: result.failure }
     end
-  end  
+  end
 
 
   # DELETE /todo_items/1 or /todo_items/1.json
   def destroy
     result = TodoItems::DestroyTodoItemService.new(@todo_item).call
-  
+
     case result
     when Success
       respond_to do |format|
@@ -70,7 +70,7 @@ class TodoItemsController < ApplicationController
       render :index, status: :unprocessable_entity, locals: { errors: result.failure }
     end
   end
-  
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

@@ -44,9 +44,11 @@ class TodoListsController < ApplicationController
   # POST /todo_lists or /todo_lists.json
   def create
     result = TodoLists::CreateTodoListService.new(todo_list_params).call
-  
+
     case result
     when Success
+      @todo_list = result.success # Store the created list
+
       respond_to do |format|
         format.html { redirect_to todo_lists_path, notice: "Todo list was successfully created." }
         format.turbo_stream
@@ -54,7 +56,7 @@ class TodoListsController < ApplicationController
     when Failure
       render :new, status: :unprocessable_entity, locals: { errors: result.failure }
     end
-  end  
+  end
 
 
   # PATCH/PUT /todo_lists/1 or /todo_lists/1.json
@@ -75,7 +77,7 @@ class TodoListsController < ApplicationController
   # DELETE /todo_lists/1 or /todo_lists/1.json
   def destroy
     result = TodoLists::DestroyTodoListService.new(@todo_list).call
-  
+
     case result
     when Success
       respond_to do |format|
@@ -86,7 +88,7 @@ class TodoListsController < ApplicationController
       render :index, status: :unprocessable_entity, locals: { errors: result.failure }
     end
   end
-  
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_todo_list
